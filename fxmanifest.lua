@@ -7,11 +7,11 @@ version '1.0.0'
 
 client_scripts {
     'config.lua',
-    'client/main.lua'
+    'client/delivery_client.lua'
 }
 
 server_scripts {
-    'server/main.lua'
+    'server/delivery_server.lua'
 }
 
 shared_script 'config.lua'

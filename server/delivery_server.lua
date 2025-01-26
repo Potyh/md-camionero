@@ -8,8 +8,8 @@ AddEventHandler('delivery:server:giveStartingItem', function()
     local Player = QBCore.Functions.GetPlayer(src)
     
     if Player then
-        if Inventory:AddItem(src, 'delivery_package', 1) then
-            TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['delivery_package'], 'add')
+        if Inventory:AddItem(src, 'plastic', 1) then
+            TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['plastic'], 'add')
             TriggerClientEvent('QBCore:Notify', src, 'Has recibido un paquete para entregar', 'success')
         else
             TriggerClientEvent('QBCore:Notify', src, 'No hay espacio en el inventario', 'error')
@@ -24,9 +24,11 @@ AddEventHandler('delivery:server:checkDeliveryItem', function()
     local Player = QBCore.Functions.GetPlayer(src)
     
     if Player then
-        if Inventory:GetItem(src, 'delivery_package', false, false) > 0 then
-            if Inventory:RemoveItem(src, 'delivery_package', 1) then
-                TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['delivery_package'], 'remove')
+        local hasPlastic = Inventory:GetItem(src, 'plastic', false, false)
+        
+        if hasPlastic and hasPlastic.amount and hasPlastic.amount > 0 then
+            if Inventory:RemoveItem(src, 'plastic', 1) then
+                TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['plastic'], 'remove')
                 TriggerClientEvent('delivery:client:deliveryComplete', src)
                 TriggerClientEvent('QBCore:Notify', src, 'Paquete entregado correctamente', 'success')
             else

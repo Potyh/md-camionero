@@ -178,6 +178,7 @@ end)
 
 -- Interacción con el NPC de entrega
 Citizen.CreateThread(function()
+    local isDeliveryTextShown = false
     while true do
         Wait(0)
         if currentDelivery and spawnedDeliveryNPC then
@@ -185,13 +186,21 @@ Citizen.CreateThread(function()
             local distanceToDelivery = #(playerCoords - vector3(Config.DeliveryNPC.coords.x, Config.DeliveryNPC.coords.y, Config.DeliveryNPC.coords.z))
 
             if distanceToDelivery < 2.0 then
-                exports['qb-core']:DrawText('[E] - Entregar paquete', 'left')
-                if IsControlJustPressed(0, 38) and hasDeliveryItem then
+                if not isDeliveryTextShown then
+                    exports['qb-core']:DrawText('[E] - Entregar paquete', 'left')
+                    isDeliveryTextShown = true
+                end
+                
+                if IsControlJustPressed(0, 38) then
                     TriggerServerEvent('delivery:server:checkDeliveryItem')
+                end
+            else
+                if isDeliveryTextShown then
+                    exports['qb-core']:HideText()
+                    isDeliveryTextShown = false
                 end
             end
         end
-        Wait(500)
     end
 end)
 
