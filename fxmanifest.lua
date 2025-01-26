@@ -5,7 +5,6 @@ author 'Potyh'
 description 'Trabajo de camionero'
 version '1.0.0'
 
--- Archivos del cliente y servidor
 client_scripts {
     'config.lua',
     'client/main.lua'
@@ -16,3 +15,9 @@ server_scripts {
 }
 
 shared_script 'config.lua'
+
+dependencies {
+    'qb-core',
+    'qb-target',
+    'origen_inventory'
+}
